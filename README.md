@@ -18,7 +18,7 @@ development: &default
 
 test:
   <<: *default
-  database: myapp_test
+  database: app_test
   ```
   ```bash
   docker-compose up
