@@ -1,5 +1,7 @@
 # rails5-docker
 
+Content from from https://docs.docker.com/compose/rails/
+
 ```bash
 docker-compose run web rails new . --force --database=postgresql --skip-bundle
 docker-compose build
