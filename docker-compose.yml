@@ -1,13 +1,24 @@
-version: '2'
-services:
-  db:
-    image: postgres
-  web:
-    build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
-    volumes:
-      - .:/app
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
+    version: '3'
+    services:
+      db:
+        image: postgres
+      redis:
+        image: redis
+      web:
+        build: ./web
+        image: web
+        ports:
+          - "8080:80"
+        depends_on:
+          - app
+      app:
+        build: ./app
+        image: app
+        command: puma
+        volumes:
+          - ./app:/app
+        expose:
+          - "3000"
+        depends_on:
+          - db
+          - redis
