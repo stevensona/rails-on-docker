@@ -1,29 +1,30 @@
-# rails5-docker
+# rails on docker
 
-Content from from https://docs.docker.com/compose/rails/
+
 
 ```bash
-docker-compose run web rails new . --force --database=postgresql --skip-bundle
+docker-compose run app rails new . --force --database=postgresql --skip-bundle
 docker-compose build
 ```
 
 Edit ```config/database.yml```
 ```yaml
-development: &default
+default: &default
   adapter: postgresql
   encoding: unicode
-  database: app_development
-  pool: 5
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: postgres
   password:
   host: db
-
+development:
+  <<: *default
+  database: app_development
 test:
   <<: *default
   database: app_test
   ```
   ```bash
   docker-compose up
-  docker-compose run web rails db:create
+  docker-compose exec app rails db:create
   ```
   
